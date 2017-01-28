@@ -1,2 +1,2 @@
-# AquaCraft
-This is the repository for the AquaCraft
+# AquaCutter
+This is the repository for the AquaCutter
