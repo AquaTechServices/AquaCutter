@@ -1,0 +1,127 @@
+[Root]
+Most Recent Package=Standard Setup Package 1
+
+
+[Package|Standard Setup Package 1|Root]
+SubWizProgID=PDWizard.SetupPkgSubWiz
+BuildFolder=C:\Program Files\Microsoft Visual Studio\VB98\Work\AquaView\Setup
+
+[Package|Standard Setup Package 1|Configure DAO ISAMs]
+Applicable=No
+
+[Package|Standard Setup Package 1|Configure DAO ODBC]
+JetWorkspace=
+ODBCDirect=
+
+[Package|Standard Setup Package 1|Files Found]
+SM_Speed.ocx=C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Speed\SM_Speed.ocx
+
+[Package|Standard Setup Package 1|Files Released]
+
+[Package|Standard Setup Package 1|Missing Dependency Information]
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Plot\SM_PLOT.ocx=
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_StripChart\SM_StripChart.ocx=
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Encoder\SM_Encoder.ocx=
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Speed\SM_Speed.ocx=
+C:\WINDOWS\system32\MSSTDFMT.DLL=
+C:\Program Files\X360 Video Capture ActiveX Control\VideoCapture.ocx=
+C:\Program Files\VideoCap Pro ActiveX Control\videocap.ocx=
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Graph\SM_Graph.ocx=
+C:\Program Files\Common Files\IC Imaging Control 3.2\ActiveX\icimagingcontrol.ocx=
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Pressure\SM_Pressure.ocx=
+
+[Package|Standard Setup Package 1|Out-of-Date Dependency Information]
+C:\WINDOWS\system32\MSCOMCTL.OCX=
+C:\WINDOWS\system32\MSCOMM32.OCX=
+
+[Package|Standard Setup Package 1|Files Added]
+
+[Package|Standard Setup Package 1|Files Removed]
+
+[Package|Standard Setup Package 1|Files In Project]
+C:\Program Files\Microsoft Visual Studio\VB98\Work\AquaView\AquaCutter.exe=Yes
+C:\WINDOWS\system32\msvbvm60.dll=Yes
+C:\WINDOWS\system32\oleaut32.dll=Yes
+C:\WINDOWS\system32\olepro32.dll=Yes
+C:\WINDOWS\system32\asycfilt.dll=Yes
+C:\WINDOWS\system32\stdole2.tlb=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=Yes
+C:\Program Files\Common Files\IC Imaging Control 3.2\ActiveX\icimagingcontrol.ocx=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Graph\SM_Graph.ocx=Yes
+C:\WINDOWS\system32\MSCOMM32.OCX=Yes
+C:\Program Files\VideoCap Pro ActiveX Control\videocap.ocx=Yes
+C:\Program Files\X360 Video Capture ActiveX Control\VideoCapture.ocx=Yes
+C:\WINDOWS\system32\TABCTL32.OCX=Yes
+C:\WINDOWS\system32\MSCOMCTL.OCX=Yes
+C:\WINDOWS\system32\MSSTDFMT.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Speed\SM_Speed.ocx=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Encoder\SM_Encoder.ocx=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_StripChart\SM_StripChart.ocx=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Plot\SM_PLOT.ocx=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=Yes
+C:\WINDOWS\system32\VB6STKIT.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Pressure\SM_Pressure.ocx=Yes
+
+[Package|Standard Setup Package 1|Configure Registry Files]
+Applicable=No
+
+[Package|Standard Setup Package 1|Configure Remote Servers]
+Applicable=No
+
+[Package|Standard Setup Package 1|Install Locations]
+C:\Program Files\Microsoft Visual Studio\VB98\Work\AquaView\AquaCutter.exe=$(AppPath)
+C:\WINDOWS\system32\msvbvm60.dll=$(WinSysPathSysFile)
+C:\WINDOWS\system32\oleaut32.dll=$(WinSysPathSysFile)
+C:\WINDOWS\system32\olepro32.dll=$(WinSysPathSysFile)
+C:\WINDOWS\system32\asycfilt.dll=$(WinSysPathSysFile)
+C:\WINDOWS\system32\stdole2.tlb=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=$(WinSysPathSysFile)
+C:\Program Files\Common Files\IC Imaging Control 3.2\ActiveX\icimagingcontrol.ocx=$(WinSysPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Graph\SM_Graph.ocx=$(WinSysPath)
+C:\WINDOWS\system32\MSCOMM32.OCX=$(WinSysPath)
+C:\Program Files\VideoCap Pro ActiveX Control\videocap.ocx=$(WinSysPath)
+C:\Program Files\X360 Video Capture ActiveX Control\VideoCapture.ocx=$(WinSysPath)
+C:\WINDOWS\system32\TABCTL32.OCX=$(WinSysPath)
+C:\WINDOWS\system32\MSCOMCTL.OCX=$(WinSysPath)
+C:\WINDOWS\system32\MSSTDFMT.DLL=$(WinSysPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Speed\SM_Speed.ocx=$(WinSysPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Encoder\SM_Encoder.ocx=$(WinSysPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_StripChart\SM_StripChart.ocx=$(WinSysPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Plot\SM_PLOT.ocx=$(WinSysPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=$(AppPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=$(WinPath)
+C:\WINDOWS\system32\VB6STKIT.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=$(WinPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Work\SM_Pressure\SM_Pressure.ocx=$(WinSysPath)
+
+[Package|Standard Setup Package 1|Configure Shared Files]
+Applicable=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Work\AquaView\AquaCutter.exe=No
+
+[Package|Standard Setup Package 1|Distribution]
+Type=single
+Size=
+Title=AquaCutter
+
+[Package|Standard Setup Package 1|Package]
+PackageFolder=C:\Program Files\Microsoft Visual Studio\VB98\Work\AquaView\Setup
+ProjectFolder=C:\Program Files\Microsoft Visual Studio\VB98\Work\AquaView
+ServerSideCab=
+File1=C:\Program Files\Microsoft Visual Studio\VB98\Work\AquaView\Setup\setup.exe
+File2=C:\Program Files\Microsoft Visual Studio\VB98\Work\AquaView\Setup\Setup.Lst
+File3=C:\Program Files\Microsoft Visual Studio\VB98\Work\AquaView\Setup\AquaCutter.CAB
+Handler1=PDWizard.FolderDplySubWiz
+Handler2=PDWizard.WebPostDplySubWiz
+
+[Package|Standard Setup Package 1|IconGroups]
+Group0=AquaCutter
+PrivateGroup0=True
+Parent0=$(Programs)
+
+[Package|Standard Setup Package 1|AquaCutter]
+Icon1=AquaCutter.exe
+Title1=AquaCutter
+StartIn1=$(AppPath)
+Key1=Icon1
