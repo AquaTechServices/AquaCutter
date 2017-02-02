@@ -110,17 +110,12 @@ Attribute VB_Name = "survey"
 
 Public Type PointXY
     x As Long
-    y As Long
+    Y As Long
 End Type
 
 Public Type DoubleXY
     x As Double
-    y As Double
-End Type
-
-Public Type DoubleLL
-    lat As Double
-    lon As Double
+    Y As Double
 End Type
 
 Public Type LargeInt
@@ -128,15 +123,9 @@ Public Type LargeInt
   lngUpper As Long
 End Type
 
-Public Type VectorArray
-    x As Double
-    y As Double
-    Z As Double
-End Type
-
 Public NmeaArray()
 
-Public Const earth_radius = 6371008 'meters
+Public Const earth_radius = 6367000 'meters
 Public TraverseX As Double
 Public TraverseY As Double
 Public InverseBearing As Double
@@ -247,11 +236,11 @@ End Function
 ' ex: FixTime = TruncTime(01:00:31.4) = 0100314
 
 Public Function TruncTime(WfgTime)
-max = Len(WfgTime)
+Max = Len(WfgTime)
 Cnt = 1
 NewTime = ""
 
-While Cnt <= max
+While Cnt <= Max
     If Mid$(WfgTime, Cnt, 1) = ":" Then
         Cnt = Cnt + 1
     ElseIf Mid$(WfgTime, Cnt, 1) = "." Then
@@ -273,12 +262,12 @@ End Function
 ' returns: assigns values to Public variables TraverseX and TraverseY
 ' ex: Call Traverse(StartX, StartY, Bearing, Distance)
 
-Public Sub Traverse(StartX As Double, StartY As Double, bearing As Double, distance As Double)
+Public Sub Traverse(StartX As Double, StartY As Double, Bearing As Double, distance As Double)
 Dim dy As Double
 Dim dx As Double
 
-dy = (Cos(DegreesToRadians(bearing))) * distance
-dx = (sIn(DegreesToRadians(bearing))) * distance
+dy = (Cos(DegreesToRadians(Bearing))) * distance
+dx = (Sin(DegreesToRadians(Bearing))) * distance
 TraverseX = StartX + dx
 TraverseY = StartY + dy
 
@@ -352,12 +341,12 @@ End Sub
 ' Returns:  Assigns values to Public Variables FourPtIntersect_Y and FourPtIntersect_X
 ' Ex:  Call FourPointIntersection(Start1_Y,Start1_X,End1_Y,End1_X,Start2_Y,Start2_X,End2_Y,End2_X)
 
-Public Sub FourPtIntersection(YA As Double, XA As Double, YB As Double, XB As Double, Yc As Double, Xc As Double, YD As Double, XD As Double)
+Public Sub FourPtIntersection(YA As Double, XA As Double, YB As Double, XB As Double, YC As Double, XC As Double, YD As Double, XD As Double)
 Static RValue As Double
-a = (YA - Yc) * (XD - Xc)
-b = (XA - Xc) * (YD - Yc)
-C = (XB - XA) * (YD - Yc)
-d = (YB - YA) * (XD - Xc)
+a = (YA - YC) * (XD - XC)
+b = (XA - XC) * (YD - YC)
+C = (XB - XA) * (YD - YC)
+d = (YB - YA) * (XD - XC)
 RValue = (a - b) / (C - d)
 'Debug.Print RValue
 FourPtIntersect_Y = YA + RValue * (YB - YA)
@@ -365,31 +354,6 @@ FourPtIntersect_Y = YA + RValue * (YB - YA)
 FourPtIntersect_X = XA + RValue * (XB - XA)
 'Debug.Print Intersect_X
 End Sub
-
-' Finds the perpendicular distance from a point to a given line.
-' DistanceToLine()
-' arguments: X1 - Starting X of Line
-'            Y1 - Starting Y of Line
-'            X2 - Ending X of Line
-'            Y2 - Ending Y of Line
-'            Xp - X Coordinate of Point
-'            Yp - Y Coordinate of Point
-' Returns: Double Distance to Line
-
-Public Function DistanceToLine(X1 As Double, Y1 As Double, X2 As Double, Y2 As Double, Xp As Double, Yp As Double) As Double
-Dim P As Single
-Dim Xc As Double
-Dim Yc As Double
-
-P = (Y2 - Yp) * (Y2 - Y1) - (X2 - Xp) * (X1 - X2)
-P = P / ((Y1 - Y2) ^ 2 + (X1 - X2) ^ 2)
-Xc = P * X1 + (1 - P) * X2
-Yc = P * Y1 + (1 - P) * Y2
-
-' return distance from point to line
-DistanceToLine = Sqr((Xc - Xp) ^ 2 + (Yc - Yp) ^ 2)
-
-End Function
 
 ' StdDevRealTime()
 ' arguments: NewValue - New Value in set
@@ -451,16 +415,16 @@ Dim Sum As Double
 Dim sumSquare As Double
 Dim Value As Double
 Dim count As Long
-Dim index As Long
+Dim Index As Long
 Sum = 0
 sumSquare = 0
 Value = 0
 count = 0
-index = 0
+Index = 0
 
 ' evaluate sum of values
-For index = LBound(arr) To UBound(arr)
-    Value = arr(index)
+For Index = LBound(arr) To UBound(arr)
+    Value = arr(Index)
     count = count + 1
     Sum = Sum + Value
     sumSquare = sumSquare + Value * Value
@@ -613,10 +577,10 @@ End Function
 
 Public Function FileUnixToDos(ByVal FileName As String, ByVal FileNumber As Integer) As Integer
 Cnt = 0
-max = FileLen(FileName)
-tempString = ""
+Max = FileLen(FileName)
+TempString = ""
 FileUnixToDos = -1 ' assume failure
-If max = 0 Then
+If Max = 0 Then
     Exit Function
 End If
 TempNumber = FreeFile(0)
@@ -624,12 +588,12 @@ Open "dosfile.tmp" For Output As #TempNumber
 While EOF(FileNumber) = False
     LineChar = Input(1, #FileNumber)
     If LineChar = Chr$(10) Then
-        Print #TempNumber, tempString
-        tempString = ""
+        Print #TempNumber, TempString
+        TempString = ""
     ElseIf LineChar = Chr$(13) Then
         'do nothing
     Else
-        tempString = tempString + LineChar
+        TempString = TempString + LineChar
     End If
 Wend
 Close #FileNumber
@@ -666,9 +630,9 @@ sum_XY = 0
 
 For Cnt = 0 To (nPoints - 1)
     sum_X = sum_X + PointArray(Cnt).x
-    sum_Y = sum_Y + PointArray(Cnt).y
+    sum_Y = sum_Y + PointArray(Cnt).Y
     sum_X_squares = sum_X_squares + (PointArray(Cnt).x * PointArray(Cnt).x)
-    sum_XY = sum_XY + (PointArray(Cnt).x * PointArray(Cnt).y)
+    sum_XY = sum_XY + (PointArray(Cnt).x * PointArray(Cnt).Y)
 Next Cnt
 
 avg_X = sum_X / nPoints
@@ -697,18 +661,18 @@ End Function
 
 Public Function sm_parse(ByVal InString As String, Delimiter As String, ByRef DynArray()) As Integer
 ' returns: elements in the array (tokens?)
-    Dim max As Integer
+    Dim Max As Integer
     Dim LoopCnt As Integer
     Dim ArrayCnt As Integer
     Dim DCnt As Integer
     
-    max = Len(InString)
+    Max = Len(InString)
     ArrayCnt = 1
     DCnt = 0
     ReDim DynArray(ArrayCnt)
     
     If Delimiter = " " Then
-        For LoopCnt = 1 To max
+        For LoopCnt = 1 To Max
             InChar = Mid$(InString, LoopCnt, 1)
             If InChar = Delimiter Then
                 If DCnt = 0 Then
@@ -722,7 +686,7 @@ Public Function sm_parse(ByVal InString As String, Delimiter As String, ByRef Dy
             End If
         Next LoopCnt
     Else
-        For LoopCnt = 1 To max
+        For LoopCnt = 1 To Max
             InChar = Mid$(InString, LoopCnt, 1)
             If InChar = Delimiter Then
                 ArrayCnt = ArrayCnt + 1
@@ -746,15 +710,15 @@ Dim SumCheck As String
 Dim CheckChar As String
 Cnt = 2 ' skip over ($) and start with GPGGA,XXX...
 Sum = 0
-max = Len(CheckString) - 3 ' leave off (*HH) checksum
-While Cnt <= max
+Max = Len(CheckString) - 3 ' leave off (*HH) checksum
+While Cnt <= Max
     CheckChar = Mid$(CheckString, Cnt, 1)
     Sum = Sum Xor Asc(Mid$(CheckString, Cnt, 1))
     Cnt = Cnt + 1
 Wend
 SumCheck = Hex(Sum)
 ' verify calculated checksum against observed checksum
-If Val(SumCheck) = Val(Mid$(CheckString, max + 2, 2)) Then
+If Val(SumCheck) = Val(Mid$(CheckString, Max + 2, 2)) Then
     Check_Sum = True
 Else
     Check_Sum = False
@@ -773,8 +737,8 @@ Dim SumCheck As String
 Dim CheckChar As String
 Cnt = 1
 Sum = 0
-max = Len(InString)
-While Cnt <= max
+Max = Len(InString)
+While Cnt <= Max
     CheckChar = Mid$(InString, Cnt, 1)
     Sum = Sum Xor Asc(Mid$(InString, Cnt, 1))
     Cnt = Cnt + 1
@@ -790,20 +754,20 @@ Public Function WebChkSum(InString As String) As String
 ' Adds the ASCII value of each character, convert to hex, return 2 least significant digits
 Dim Cnt As Integer
 Dim Sum As Integer
-Dim max As Integer
+Dim Max As Integer
 Dim CheckChar As String
 Dim HexSum As String
 Cnt = 1
 Sum = 0
-max = Len(InString)
-While Cnt <= max
+Max = Len(InString)
+While Cnt <= Max
     CheckChar = Mid$(InString, Cnt, 1)
     Sum = Sum + Asc(CheckChar)
     Cnt = Cnt + 1
 Wend
-max = Len(Str(Sum))
-If max > 2 Then
-    WebChkSum = Mid$(Hex(Sum), max - 2, 2)
+Max = Len(Str(Sum))
+If Max > 2 Then
+    WebChkSum = Mid$(Hex(Sum), Max - 2, 2)
 Else
     WebChkSum = Hex(Sum)
 End If
@@ -881,7 +845,7 @@ Public Function BaseConvert(NumIn As String, BaseIn As Byte, BaseOut As Byte) As
       If Remainder >= 10 Then
          CurrentCharacter = Chr$(Remainder + 55)
       Else
-         CurrentCharacter = Right$(Str$(Remainder), Len(Str$(Remainder)) - 1)
+         CurrentCharacter = right$(Str$(Remainder), Len(Str$(Remainder)) - 1)
       End If
       BaseConvert = CurrentCharacter & BaseConvert
    Loop While RunningTotal > 0
@@ -907,7 +871,7 @@ Public Function GreatCircleDistance(ByVal lat1 As Double, ByVal lon1 As Double, 
     
     dlon = lon2 - lon1
     dlat = lat2 - lat1
-    a = (sIn(dlat / 2)) ^ 2 + Cos(lat1) * Cos(lat2) * (sIn(dlon / 2)) ^ 2
+    a = (Sin(dlat / 2)) ^ 2 + Cos(lat1) * Cos(lat2) * (Sin(dlon / 2)) ^ 2
     d = 2 * Atn(Sqr(a) / Sqr(1 - a))
 
     ' This is a simpler formula, but it's subject to rounding errors
@@ -930,11 +894,11 @@ Public Function InitialHeading(ByVal lat1 As Double, ByVal lon1 As Double, ByVal
     
     dlon = lon2 - lon1
     dlat = lat2 - lat1
-    a = (sIn(dlat / 2)) ^ 2 + Cos(lat1) * Cos(lat2) * (sIn(dlon / 2)) ^ 2
+    a = (Sin(dlat / 2)) ^ 2 + Cos(lat1) * Cos(lat2) * (Sin(dlon / 2)) ^ 2
     d = 2 * Atn(Sqr(a) / Sqr(1 - a))
     
-    Heading = Arcos((sIn(lat2) - sIn(lat1) * Cos(d)) / (sIn(d) * Cos(lat1)))
-    If (sIn(lon2 - lon1) < 0) Then
+    Heading = Arcos((Sin(lat2) - Sin(lat1) * Cos(d)) / (Sin(d) * Cos(lat1)))
+    If (Sin(lon2 - lon1) < 0) Then
         Heading = 2 * PI - Heading ' PI defined above as PI = 4 * Atn(1 / 1)
     End If
     
@@ -942,75 +906,20 @@ Public Function InitialHeading(ByVal lat1 As Double, ByVal lon1 As Double, ByVal
 
 End Function
 
-' compute cross track distance in geodetic coordinates
-Public Function CrossTrack(latA, lonA, latB, lonB, latC, lonC) As Double
-Dim dAC As Double
-Dim brngAB As Double
-Dim brngAC As Double
-Dim dXT As Double
-
-    dAC = GreatCircleDistance(latA, lonA, latC, lonC)
-    brngAB = InitialHeading(latA, lonA, latB, lonB)
-    brngAC = InitialHeading(latA, lonA, latC, lonC)
-    dXT = Arcsin(sIn(dAC / earth_radius) * sIn(brngAC - brngAB)) * earth_radius
-    CrossTrack = dXT 'distance returned in meters
-    
-End Function
-
-' compute new coordinates from start point distance and bearing
-Public Sub GreatCircleTraverse(latA As Double, lonA As Double, distB As Double, brngB As Double, latB As Double, lonB As Double)
-Dim a As Double
-Dim b As Double
-
-    'Convert to radians
-    a = DegreesToRadians(latA)
-    b = DegreesToRadians(lonA)
-    brngB = DegreesToRadians(brngB)
-    distB = distB / earth_radius ' meters
-    
-    latB = RadiansToDegrees(Arcsin(sIn(a) * Cos(distB) + Cos(a) * sIn(distB) * Cos(brngB)))
-    lonB = RadiansToDegrees(b + atan2(sIn(brngB) * sIn(distB) * Cos(a), Cos(distB) - sIn(a) * sIn(latB)))
-    
-    If lonB < -180 Then
-        lonB = lonB + 360
-    ElseIf lonB > 180 Then
-        lonB = lonB - 360
-    End If
-    
-End Sub
-
 Public Function Arcos(ByVal x As Double) As Double
     Arcos = Atn(-x / Sqr(-x * x + 1)) + 2 * Atn(1)
 End Function
 
- Function Arcsin(x As Double) As Double
-    Arcsin = Atn(x / Sqr(-x * x + 1))
-End Function
-
-Public Function atan2(y As Double, x As Double) As Double
-
-If x > 0 Then
-atan2 = Atn(y / x)
-ElseIf x < 0 Then
-atan2 = Sgn(y) * (PI - Atn(Abs(y / x)))
-ElseIf y = 0 Then
-atan2 = 0
-Else
-atan2 = Sgn(y) * PI / 2
-End If
-
-End Function
-
 Public Function BoxCarFilter(ByRef ValueArray() As Double)
     Dim Min As Integer
-    Dim max As Integer
+    Dim Max As Integer
     Dim Sum As Double
     Min = LBound(ValueArray)
-    max = UBound(ValueArray)
-    For count = Min To max
+    Max = UBound(ValueArray)
+    For count = Min To Max
         Sum = Sum + ValueArray(count)
     Next
-    BoxCarFilter = Sum / (max - Min)
+    BoxCarFilter = Sum / (Max - Min)
 End Function
 
 Public Function makeUnixTime(ByVal myTime As Date) As Long
@@ -1069,11 +978,11 @@ Dim startTime As Long
 Dim endTime As Long
 Dim encTime As Long
 
-NinetyDays = 324000 '324000 seconds
+NinetyDays = 7776000 '324000 seconds
 curTime = Now 'get the time
 curSeconds = makeUnixTime(curTime) 'convert to unix seconds
 'encrypt seconds
-encTime = encryptUnixTime(curSeconds)
+'encTime = encryptUnixTime(curSeconds)
 'get registry entries
 startTime = CLng(GetSetting("MyApp", "ou812", "StartTime", "0"))
 endTime = CLng(GetSetting("MyApp", "ou812", "EndTime", "0"))
@@ -1088,14 +997,14 @@ If reset Then
         Call SaveSetting("MyApp", "ou812", "EndTime", CStr(curSeconds + NinetyDays))
         endTime = curSeconds + NinetyDays
     End If
-    Call MsgBox(CStr((endTime - startTime) / 3600) & " Days left on current registration code.", vbOKOnly, "Registration Check")
+    Call MsgBox(CStr((endTime - startTime) / 86400) & " Days left on current registration code.", vbOKOnly, "Registration Check")
     checkSoftwareTime = True
 Else
     'check if this time is between registry times
     If curSeconds < endTime And curSeconds > startTime Then
         'all ok
         Call SaveSetting("MyApp", "ou812", "StartTime", curSeconds)
-        Call MsgBox(CStr((endTime - curSeconds) / 3600) & " Days left on current registration code.", vbOKOnly, "Registration Check")
+        Call MsgBox(Format((endTime - curSeconds) / 86400, 0) & " Days left on current registration code.", vbOKOnly, "Registration Check")
         checkSoftwareTime = True
     Else
         'shut down software
@@ -1105,7 +1014,7 @@ End If
 End Function
 
 Public Function parseNmea(ByVal InString As String) As Boolean
-Dim max As Integer
+Dim Max As Integer
 Dim temp As Integer
 Dim i As Integer
 Dim NmeaID As String
@@ -1131,12 +1040,12 @@ InString = Mid$(InString, InStr(1, InString, "$", vbTextCompare)) ' Strip-off an
 If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without CheckSum validation
     Call sm_parse(InString, "*", TempArray) ' parse out checksum if present (ie; strip off * etc...)
     Call sm_parse(TempArray(1), ",", NmeaArray)
-    max = UBound(NmeaArray)
-    NmeaID = Right$(NmeaArray(1), Len(NmeaArray(1)) - 3) ' skip over $xx characters
+    Max = UBound(NmeaArray)
+    NmeaID = right$(NmeaArray(1), Len(NmeaArray(1)) - 3) ' skip over $xx characters
     parseNmea = False
     Select Case NmeaID
     Case "GGA"
-        If max = 15 Then
+        If Max = 15 Then
             If IsNumeric(NmeaArray(2)) Then
                 NmeaInfo.gga.Utc = NmeaArray(2)
             End If
@@ -1178,11 +1087,11 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
             NmeaInfo.gga.LastUpdate = GetTickCount
             parseNmea = True
         Else
-            Debug.Print "ERROR Decoding GGA " + InString + " Expected 15 but got " + Str(max)
+            Debug.Print "ERROR Decoding GGA " + InString + " Expected 15 but got " + Str(Max)
         End If
         Exit Function
     Case "GLL"
-        If max = 7 Or max = 8 Then
+        If Max = 7 Or Max = 8 Then
             If IsNumeric(NmeaArray(2)) Then
                 NmeaInfo.gll.lat = NmeaArray(2)
             End If
@@ -1196,20 +1105,20 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
             End If
             NmeaInfo.gll.Status = NmeaArray(7)
             ' for NMEA-0183 version 3.0
-            If max = 8 Then
+            If Max = 8 Then
                 NmeaInfo.gll.Mode = NmeaArray(8)
             End If
             NmeaInfo.gll.LastUpdate = GetTickCount
             parseNmea = True
         Else
-            Debug.Print "ERROR Decoding GLL " + InString + " Expected 7 or 8 but got " + Str(max)
+            Debug.Print "ERROR Decoding GLL " + InString + " Expected 7 or 8 but got " + Str(Max)
         End If
         Exit Function
     Case "GSA"
-        If max = 18 Then
+        If Max = 18 Then
             NmeaInfo.gsa.Mode = NmeaArray(2)
             NmeaInfo.gsa.ModeStat = NmeaArray(3)
-            For SatCount = 4 To max - 3
+            For SatCount = 4 To Max - 3
                 NmeaInfo.gsa.SatID(SatCount - 3) = NmeaArray(SatCount)
             Next SatCount
             If IsNumeric(NmeaArray(16)) Then
@@ -1224,11 +1133,11 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
             NmeaInfo.gsa.LastUpdate = GetTickCount
             parseNmea = True
         Else
-            Debug.Print "ERROR Decoding GSA " + InString + " Expected 18 but got " + Str(max)
+            Debug.Print "ERROR Decoding GSA " + InString + " Expected 18 but got " + Str(Max)
         End If
         Exit Function
     Case "GST"
-        If max = 9 Then
+        If Max = 9 Then
             If IsNumeric(NmeaArray(2)) Then
                 NmeaInfo.gst.Utc = NmeaArray(2)
             Else
@@ -1260,7 +1169,7 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
             NmeaInfo.gst.LastUpdate = GetTickCount
             parseNmea = True
         Else
-            Debug.Print "ERROR Decoding GST " + InString + " Expected 9 but got " + Str(max)
+            Debug.Print "ERROR Decoding GST " + InString + " Expected 9 but got " + Str(Max)
         End If
         Exit Function
     Case "GSV"
@@ -1277,7 +1186,7 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
             GsvSats = 0
         End If
         SatCount = 0
-        For MessageCount = 1 To (max - 5) / 4
+        For MessageCount = 1 To (Max - 5) / 4
             If IsNumeric(NmeaArray((MessageCount * 4) + 1)) Then
                 NmeaInfo.gsv.SatID(GsvSats) = NmeaArray((MessageCount * 4) + 1)
             End If
@@ -1308,7 +1217,7 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
             If NmeaInfo.sats.MessageNum = 1 Then
                 NmeaInfo.sats.SatsInView = 0
             End If
-            For MessageCount = 1 To (max - 5) / 5
+            For MessageCount = 1 To (Max - 5) / 5
                 If IsNumeric(NmeaArray(MessageCount * 5)) Then
                     NmeaInfo.sats.SatID(NmeaInfo.sats.SatsInView) = NmeaArray(MessageCount * 5)
                 End If
@@ -1334,7 +1243,7 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
         End If
         If NmeaArray(2) Like "RXQ" Then
             '$PNCTR,RXQ,123519,Y,9.6,54,0* 78
-            If max > 3 Then
+            If Max > 3 Then
                 If IsNumeric(NmeaArray(3)) Then
                     NmeaInfo.rxq.Utc = NmeaArray(3)
                 End If
@@ -1347,14 +1256,14 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
                 NmeaInfo.rxq.LastUpdate = GetTickCount
                 parseNmea = True
             Else
-                Debug.Print "ERROR Decoding RXQ " + InString + " Expected 4 or 7 but got " + Str(max)
+                Debug.Print "ERROR Decoding RXQ " + InString + " Expected 4 or 7 but got " + Str(Max)
             End If
             Exit Function
         End If
         If NmeaArray(2) Like "NAVQ" Then
             ' either - $PNCTR,NAVQ,123519,3D,RTG,DUAL*55
             '     or - $PNCTR,NAVQ,202759,NN*74
-            If max > 3 Then
+            If Max > 3 Then
                 If IsNumeric(NmeaArray(3)) Then
                     NmeaInfo.navq.Utc = NmeaArray(3)
                 End If
@@ -1370,12 +1279,12 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
                 NmeaInfo.navq.LastUpdate = GetTickCount
                 parseNmea = True
             Else
-                Debug.Print "ERROR Decoding NAVQ " + InString + " Expected 4 or 6 but got " + Str(max)
+                Debug.Print "ERROR Decoding NAVQ " + InString + " Expected 4 or 6 but got " + Str(Max)
             End If
             Exit Function
         End If
     Case "VTG"
-        If max = 9 Or max = 10 Then
+        If Max = 9 Or Max = 10 Then
             If IsNumeric(NmeaArray(2)) Then
                 NmeaInfo.vtg.cogt = NmeaArray(2)
             Else
@@ -1397,17 +1306,17 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
             NmeaInfo.vtg.LastUpdate = GetTickCount
             parseNmea = True
             ' for NMEA-0183 version 3.0
-            If max = 10 Then
+            If Max = 10 Then
                 NmeaInfo.vtg.Mode = NmeaArray(10)
             End If
             NmeaInfo.vtg.LastUpdate = GetTickCount
             parseNmea = True
         Else
-            Debug.Print "ERROR Decoding VTG " + InString + " Expected 9 or 10 but got " + Str(max)
+            Debug.Print "ERROR Decoding VTG " + InString + " Expected 9 or 10 but got " + Str(Max)
         End If
         Exit Function
     Case "ZDA"
-        If max = 7 Then
+        If Max = 7 Then
             If IsNumeric(NmeaArray(2)) Then
                 NmeaInfo.zda.Utc = NmeaArray(2)
             End If
@@ -1429,11 +1338,11 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
             NmeaInfo.zda.LastUpdate = GetTickCount
             parseNmea = True
         Else
-            Debug.Print "ERROR Decoding ZDA " + InString + " Expected 7 but got " + Str(max)
+            Debug.Print "ERROR Decoding ZDA " + InString + " Expected 7 but got " + Str(Max)
         End If
         Exit Function
     Case "HDT"
-        If max = 3 Then
+        If Max = 3 Then
             If IsNumeric(NmeaArray(2)) Then
                 NmeaInfo.hdt.HeadingT = NmeaArray(2)
             End If
@@ -1441,7 +1350,7 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
             NmeaInfo.hdt.LastUpdate = GetTickCount
             parseNmea = True
         Else
-            Debug.Print "ERROR Decoding " + DeviceType + " HDT " + InString + " Expected 3 but got " + Str(max)
+            Debug.Print "ERROR Decoding " + DeviceType + " HDT " + InString + " Expected 3 but got " + Str(Max)
         End If
         Exit Function
 '    Case "HDM"
@@ -1457,7 +1366,7 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
 '        End If
 '        Exit Function
     Case "PR"
-        If max = 5 Then
+        If Max = 5 Then
             If IsNumeric(NmeaArray(2)) Then
                 NmeaInfo.ohpr.Heading = NmeaArray(2)
             End If
@@ -1473,7 +1382,7 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
             NmeaInfo.ohpr.LastUpdate = GetTickCount
             parseNmea = True
         Else
-            Debug.Print "ERROR Decoding OHPR " + InString + " Expected 7 but got " + Str(max)
+            Debug.Print "ERROR Decoding OHPR " + InString + " Expected 7 but got " + Str(Max)
         End If
         Exit Function
     Case Else
@@ -1481,11 +1390,11 @@ If Check_Sum(InString) Or DeviceType = Asci Then ' device EITHER with OR without
     End Select
 Else
     Call sm_parse(InString, ",", NmeaArray)
-    max = UBound(NmeaArray)
-    NmeaID = Right$(NmeaArray(1), 3)
+    Max = UBound(NmeaArray)
+    NmeaID = right$(NmeaArray(1), 3)
     Select Case NmeaID
     Case "HDT"
-        If max = 3 Then
+        If Max = 3 Then
             If IsNumeric(NmeaArray(2)) Then
                 NmeaInfo.hdt.HeadingT = NmeaArray(2)
             End If
@@ -1493,11 +1402,11 @@ Else
             NmeaInfo.hdt.LastUpdate = GetTickCount
             parseNmea = True
         Else
-            Debug.Print "ERROR Decoding HDT " + InString + " Expected 3 but got " + Str(max)
+            Debug.Print "ERROR Decoding HDT " + InString + " Expected 3 but got " + Str(Max)
         End If
         Exit Function
     Case "HDM"
-        If max = 3 Then
+        If Max = 3 Then
             If IsNumeric(NmeaArray(2)) Then
                 NmeaInfo.hdm.HeadingM = NmeaArray(2)
             End If
@@ -1505,11 +1414,11 @@ Else
             NmeaInfo.hdm.LastUpdate = GetTickCount
             parseNmea = True
         Else
-            Debug.Print "ERROR Decoding HDM " + InString + " Expected 3 but got " + Str(max)
+            Debug.Print "ERROR Decoding HDM " + InString + " Expected 3 but got " + Str(Max)
         End If
         Exit Function
     Case "RD1"
-        If max >= 6 Then
+        If Max >= 6 Then
             If IsNumeric(NmeaArray(6)) Then
                 NmeaInfo.rd1.BitErrorRate1 = NmeaArray(6)
                 NmeaInfo.rd1.BitErrorRate2 = -1
@@ -1527,7 +1436,7 @@ Else
         End If
         Exit Function
     Case Else
-        Debug.Print "Decoding Failed " + InString + " - detected fields = " + Str(max)
+        Debug.Print "Decoding Failed " + InString + " - detected fields = " + Str(Max)
     End Select
 End If
 Exit Function
@@ -1540,8 +1449,8 @@ ErrorHandler:
     Resume Next
 End Function
 
-Public Function CheckPath(strpath As String) As Boolean
-    If Dir$(strpath) <> "" Then
+Public Function CheckPath(strPath As String) As Boolean
+    If Dir$(strPath) <> "" Then
         CheckPath = True
     Else
         CheckPath = False
@@ -1656,7 +1565,7 @@ Dim Value As Variant, temp As Variant
 Dim sp As Integer
 Dim leftStk(32) As Long, rightStk(32) As Long
 Dim leftNdx As Long, rightNdx As Long
-Dim i As Long, J As Long
+Dim i As Long, j As Long
 
 ' account for optional arguments
 If IsMissing(numEls) Then numEls = UBound(arr)
@@ -1672,28 +1581,28 @@ Do
     If rightNdx > leftNdx Then
         Value = arr(rightNdx)
         i = leftNdx - 1
-        J = rightNdx
+        j = rightNdx
         ' find the pivot item
         If descending Then
             Do
                 Do: i = i + 1: Loop Until arr(i) <= Value
-                Do: J = J - 1: Loop Until J = leftNdx Or arr(J) >= Value
+                Do: j = j - 1: Loop Until j = leftNdx Or arr(j) >= Value
                 temp = arr(i)
-                arr(i) = arr(J)
-                arr(J) = temp
-            Loop Until J <= i
+                arr(i) = arr(j)
+                arr(j) = temp
+            Loop Until j <= i
         Else
             Do
                 Do: i = i + 1: Loop Until arr(i) >= Value
-                Do: J = J - 1: Loop Until J = leftNdx Or arr(J) <= Value
+                Do: j = j - 1: Loop Until j = leftNdx Or arr(j) <= Value
                 temp = arr(i)
-                arr(i) = arr(J)
-                arr(J) = temp
-            Loop Until J <= i
+                arr(i) = arr(j)
+                arr(j) = temp
+            Loop Until j <= i
         End If
         ' swap found items
-        temp = arr(J)
-        arr(J) = arr(i)
+        temp = arr(j)
+        arr(j) = arr(i)
         arr(i) = arr(rightNdx)
         arr(rightNdx) = temp
         ' push on the stack the pair of pointers that differ most
@@ -1717,57 +1626,3 @@ Do
 Loop
 End Sub
 
-Public Function geotoxyz(ByRef x As Double, ByRef y As Double, ByRef Z As Double, ByVal lon As Double, ByVal lat As Double, ByVal a As Double, ByVal invf As Double)
-' WGS84 : a = 6378137.00, invf = 298.257223563
-' NAD27 : a = 6378206.40, invf = 294.978698200
-
-    Dim height As Integer
-    Dim n As Double
-    Dim temp As Double
-    Dim esqr As Double
-    height = 0
-    esqr = (2 * (1 / invf)) - ((1 / invf) ^ 2)
-'    esqr = (1 / invf) * (1 / invf)
-    temp = sIn(lat)
-    n = a / Sqr(1 - esqr * temp * temp)
-    temp = (n + height) * Cos(lat)
-    x = temp * Cos(lon)
-    y = temp * sIn(lon)
-    Z = (n * (1 - esqr) + height) * sIn(lat)
-
-
-End Function
-
-Public Function xyztogeo(ByRef lon As Double, ByRef lat As Double, ByVal x As Double, ByVal y As Double, ByVal Z As Double, ByVal a As Double, ByVal invf As Double)
-' WGS84 : a = 6378137.00, invf = 298.257223563
-' NAD27 : a = 6378206.40, invf = 294.978698200
-
-    Dim P As Double
-    Dim n As Double
-    Dim h As Double
-    Dim temp As Double
-
-    esqr = (2 * (1 / invf)) - ((1 / invf) ^ 2)
-    lon = Atn(y / x)
-    P = Sqr(x * x + y * y)
-    lat = Atn(Z / (P * (1 - esqr)))
-    temp = sIn(lat)
-    n = a / Sqr(1 - esqr * temp * temp)
-    h = P / Cos(lat) - n
-    lat = Atn(Z / (P * (1 - esqr * n / (n + h))))
-
-End Function
-
-Public Function NoSpace(InString As String) As String
-Dim count As Integer
-Dim max As Integer
-Dim tempString As String
-max = Len(InString)
-For count = 1 To max
-    If Mid$(InString, count, 1) = " " Then
-    Else
-        tempString = tempString + Mid$(InString, count, 1)
-    End If
-Next
-NoSpace = tempString
-End Function

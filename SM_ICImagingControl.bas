@@ -1,4 +1,4 @@
-Attribute VB_Name = "SM_Moldule"
+Attribute VB_Name = "SM_ICImagingControl"
 Option Explicit
 
 '    pixXValue = twipXValue \ Screen.TwipsPerPixelX
@@ -17,8 +17,8 @@ Public Type LOGBRUSH
 End Type
 
 Public Type RECT
-    left As Long
-    top As Long
+    Left As Long
+    Top As Long
     right As Long
     bottom As Long
 End Type
@@ -30,10 +30,10 @@ Public Type Bounds
     LowerY As Long
 End Type
 
-Public Type POINTAPI
-    X As Long
-    Y As Long
-End Type
+'Public Type POINTAPI
+'    X As Long
+'    Y As Long
+'End Type
 
     'Dynamic Integer Array
 Public Type Dyn_Array
@@ -94,7 +94,7 @@ Public Const DT_RTLREADING = &H20000
 Public Const DT_WORD_ELLIPSIS = &H40000
 
 Public Const SRCPAINT& = &HEE0086
-Public Const SRCCOPY& = &HCC0020
+'Public Const SRCCOPY& = &HCC0020
 Public Const SRCAND& = &H8800C6
 Public Const SRCERASE& = &H440328
 Public Const SRCINVERT& = &H660046
@@ -202,7 +202,7 @@ Const Message = "Hello !"
 '**  Function Declarations:
 
 #If Win32 Then
-Public Declare Function ExtTextOut Lib "gdi32" Alias "ExtTextOutA" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal wOptions As Long, ByVal lpRect As Any, ByVal lpString As String, ByVal nCount As Long, lpDx As Long) As Long
+Public Declare Function ExtTextOut Lib "gdi32" Alias "ExtTextOutA" (ByVal hdc As Long, ByVal x As Long, ByVal Y As Long, ByVal wOptions As Long, ByVal lpRect As Any, ByVal lpString As String, ByVal nCount As Long, lpDx As Long) As Long
 Public Declare Function SetBkColor Lib "gdi32" (ByVal hdc As Long, ByVal crColor As Long)
 Public Declare Function SetBkMode Lib "gdi32" (ByVal hdc As Long, ByVal nBkMode As Long) As Long
 Public Declare Function GetBkColor Lib "gdi32" (ByVal hdc As Long) As Long
@@ -211,7 +211,7 @@ Public Declare Function DrawCaption Lib "user32" (ByVal hWnd As Long, ByVal hdc 
 Public Declare Function DrawText Lib "user32" Alias "DrawTextA" (ByVal hdc As Long, ByVal lpStr As String, ByVal nCount As Long, lpRect As RECT, ByVal wFormat As Long) As Long
 Public Declare Function CreateFont Lib "gdi32" Alias "CreateFontA" (ByVal nHeight As Long, ByVal nWidth As Long, ByVal nEscapement As Long, ByVal nOrientation As Long, ByVal fnWeight As Long, ByVal fdwItalic As Boolean, ByVal fdwUnderline As Boolean, ByVal fdwStrikeOut As Boolean, ByVal fdwCharSet As Long, ByVal fdwOutputPrecision As Long, ByVal fdwClipPrecision As Long, ByVal fdwQuality As Long, ByVal fdwPitchAndFamily As Long, ByVal lpszFace As String) As Long
 Public Declare Function Arc Lib "gdi32" (ByVal hdc As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long, ByVal X3 As Long, ByVal Y3 As Long, ByVal X4 As Long, ByVal Y4 As Long) As Long
-Public Declare Function AngleArc Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal Radius As Long, ByVal StartAngle As Single, ByVal SweepAngle As Single) As Boolean
+Public Declare Function AngleArc Lib "gdi32" (ByVal hdc As Long, ByVal x As Long, ByVal Y As Long, ByVal Radius As Long, ByVal StartAngle As Single, ByVal SweepAngle As Single) As Boolean
 Public Declare Function CreateBrushIndirect Lib "gdi32" (lpLogBrush As LOGBRUSH) As Long
 Public Declare Function CreatePatternBrush Lib "gdi32" (ByVal hBitmap As Long) As Long
 Public Declare Function CreateCompatibleBitmap& Lib "gdi32" (ByVal hdc As Long, ByVal nWidth As Long, ByVal nHeight As Long)
@@ -220,8 +220,8 @@ Public Declare Function CreateCompatibleDC& Lib "gdi32" (ByVal hdc As Long)
 Public Declare Function DeleteObject& Lib "gdi32" (ByVal hObject As Long)
 Public Declare Function CreatePen& Lib "gdi32" (ByVal nPenStyle As Long, ByVal nWidth As Long, ByVal crColor As Long)
 Public Declare Function GetStockObject& Lib "gdi32" (ByVal nIndex As Long)
-Public Declare Function MoveToEx& Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal lpPoint As Long)
-Public Declare Function LineTo& Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long)
+Public Declare Function MoveToEx& Lib "gdi32" (ByVal hdc As Long, ByVal x As Long, ByVal Y As Long, ByVal lpPoint As Long)
+Public Declare Function LineTo& Lib "gdi32" (ByVal hdc As Long, ByVal x As Long, ByVal Y As Long)
 Public Declare Function Polyline& Lib "gdi32" (ByVal hdc&, lpPoints As POINTAPI, ByVal nCount&)
 Public Declare Function PolylineTo Lib "gdi32" (ByVal hdc As Long, lppt As POINTAPI, ByVal cCount As Long) As Long
 Public Declare Function Polygon Lib "gdi32" (ByVal hdc As Long, lpPoint As POINTAPI, ByVal nCount As Long) As Long
@@ -237,8 +237,8 @@ Public Declare Function FillRect Lib "user32" (ByVal hdc As Long, lpRect As RECT
 Public Declare Function Rectangle Lib "gdi32" (ByVal hdc As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long) As Long
 Public Declare Function CreateSolidBrush& Lib "gdi32" (ByVal crColor As Long)
 Public Declare Function SetStretchBltMode Lib "gdi32" (ByVal hdc As Long, ByVal nStretchMode As Long)
-Public Declare Function StretchBlt& Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal nSrcWidth As Long, ByVal nSrcHeight As Long, ByVal dwRop As Long)
-Public Declare Function BitBlt& Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, _
+Public Declare Function StretchBlt& Lib "gdi32" (ByVal hdc As Long, ByVal x As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal nSrcWidth As Long, ByVal nSrcHeight As Long, ByVal dwRop As Long)
+Public Declare Function BitBlt& Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, _
     ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, _
     ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long)
 #End If 'WIN32
@@ -405,4 +405,6 @@ If plngLeft < lngLast Then QuickSort1 pvarArray, plngLeft, lngLast
 If lngFirst < plngRight Then QuickSort1 pvarArray, lngFirst, plngRight
 
 End Sub
+
+
 
