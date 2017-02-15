@@ -1,0 +1,43 @@
+ComputerName = "."
+Set wmiServices = GetObject( _
+    "winmgmts:{impersonationLevel=Impersonate}!//" _
+    & ComputerName)
+' Get physical disk drive
+Set wmiDiskDrives = wmiServices.ExecQuery( _
+    "SELECT * FROM Win32_DiskDrive")
+
+For Each wmiDiskDrive In wmiDiskDrives
+    txtSerNum.Text = NoSpace(wmiDiskDrive.SerialNumber)
+    Exit For
+    'MsgBox "Disk drive Caption: " _
+    '    & wmiDiskDrive.Caption _
+    '    & vbNewLine & "DeviceID: " _
+    '    & " (" & wmiDiskDrive.DeviceID & ")"
+    'MsgBox "Serial number" _
+    '            & wmiDiskDrive.SerialNumber
+    'Use the disk drive device id to
+    ' find associated partition
+'    query = "ASSOCIATORS OF {Win32_DiskDrive.DeviceID='" _
+'        & wmiDiskDrive.DeviceID & "'} WHERE AssocClass = Win32_DiskDriveToDiskPartition"
+'    Set wmiDiskPartitions = wmiServices.ExecQuery(query)
+
+'    For Each wmiDiskPartition In wmiDiskPartitions
+'        'Use partition device id to find logical disk
+'        Set wmiLogicalDisks = wmiServices.ExecQuery _
+'            ("ASSOCIATORS OF {Win32_DiskPartition.DeviceID='" _
+'             & wmiDiskPartition.DeviceID & "'} WHERE AssocClass = Win32_LogicalDiskToPartition")
+
+'        For Each wmiLogicalDisk In wmiLogicalDisks
+'            MsgBox "Drive letter associated" _
+'                & " with disk drive = " _
+'                & wmiDiskDrive.Caption _
+'                & wmiDiskDrive.DeviceID _
+'                & vbNewLine & " Partition = " _
+'                & wmiDiskPartition.DeviceID _
+'                & vbNewLine & " is " _
+'                & wmiLogicalDisk.DeviceID
+'
+'        Next
+'    Next
+Next
+
